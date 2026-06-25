@@ -219,7 +219,7 @@
           </div>
           <div class="field">
             <label for="dob">Date of Birth <span class="req">*</span></label>
-            <input type="date" id="dob">
+            <input type="date" id="dob" max="9999-12-31">
           </div>
         </div>
         <div class="grid-2">
@@ -229,8 +229,7 @@
               <option value="" disabled selected>Select gender</option>
               <option>Male</option>
               <option>Female</option>
-              <option>Other</option>
-              <option>Prefer not to say</option>
+              <option>Not to say</option>
             </select>
           </div>
         </div>
@@ -262,7 +261,7 @@
           <li data-n="4.">I understand that Mediclaim coverage is linked to my employment with Padam's and will cease upon separation from the Company, subject to the terms of the policy.</li>
         </ol>
         <div class="consent-row">
-          <input type="checkbox" id="consent">
+          <input type="checkbox" id="consent" required>
           <label for="consent">
             I have read and understood the above and authorise the Company to recover the applicable premium contribution from my salary through payroll deductions.
           </label>
@@ -298,6 +297,11 @@ var depCount = 0;
 
 // ── Add Dependent ────────────────────────────────────────────
 document.getElementById("btnAddDep").addEventListener("click", function() {
+  var activeDeps = document.querySelectorAll(".dep-block").length;
+  if (activeDeps >= 7) {
+    showToast("error", "Maximum 7 dependents allowed.");
+    return;
+  }
   depCount++;
   var id = depCount;
   var container = document.getElementById("depContainer");
@@ -329,13 +333,13 @@ document.getElementById("btnAddDep").addEventListener("click", function() {
         '</div>' +
         '<div class="field">' +
           '<label>Date of Birth <span class="req">*</span></label>' +
-          '<input type="date" id="depDob-' + id + '">' +
+          '<input type="date" id="depDob-' + id + '" max="9999-12-31">+
         '</div>' +
         '<div class="field">' +
           '<label>Gender <span class="req">*</span></label>' +
           '<select id="depGender-' + id + '">' +
             '<option value="" disabled selected>Select</option>' +
-            '<option>Male</option><option>Female</option><option>Other</option>' +
+            '<option>Male</option><option>Female</option><option>Not to say</option>' +
           '</select>' +
         '</div>' +
       '</div>' +
