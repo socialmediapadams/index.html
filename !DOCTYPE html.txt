@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediclaim Coverage Survey Form — Padam's</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f4f8;
+    color: #1a1a2e;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  .page-wrap { max-width: 760px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .form-header {
+    background: #0C447C;
+    border-radius: 14px 14px 0 0;
+    padding: 28px 32px 24px;
+    color: #fff;
+  }
+  .form-header .logo-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+  }
+  .form-header .shield {
+    width: 40px; height: 40px; background: rgba(255,255,255,0.15);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  }
+  .form-header .shield svg { width: 22px; height: 22px; }
+  .form-header h1 { font-size: 20px; font-weight: 600; line-height: 1.3; }
+  .form-header p  { font-size: 13px; opacity: 0.78; margin-top: 4px; }
+
+  /* ── Body ── */
+  .form-body {
+    background: #fff;
+    border-radius: 0 0 14px 14px;
+    padding: 28px 32px 32px;
+    border: 1px solid #dce3ed;
+    border-top: none;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+    text-transform: uppercase; color: #185FA5;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: #e2e8f2;
+  }
+
+  /* ── Grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media(max-width:580px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .form-body { padding: 20px 18px 24px; }
+  }
+
+  /* ── Field ── */
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; font-weight: 600; color: #5a6a7e; }
+  .field label .req { color: #e24b4a; margin-left: 2px; }
+  .field input, .field select {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid #d0d8e4; border-radius: 8px;
+    font-size: 14px; font-family: inherit;
+    background: #fff; color: #1a1a2e;
+    outline: none; transition: border-color 0.18s, box-shadow 0.18s;
+    height: 38px;
+  }
+  .field input:focus, .field select:focus {
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+  }
+  .field input.error, .field select.error { border-color: #e24b4a; }
+
+  /* ── Dependent block ── */
+  .dep-block {
+    background: #f7f9fc;
+    border: 1px solid #dce3ed;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .dep-block-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .dep-number {
+    font-size: 12px; font-weight: 700; color: #185FA5;
+    background: #e6f1fb; padding: 3px 10px; border-radius: 20px;
+  }
+  .dep-detail { margin-top: 12px; }
+
+  /* ── Buttons ── */
+  .btn-add-dep {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; padding: 10px;
+    border: 1.5px dashed #378ADD; border-radius: 8px;
+    background: none; color: #185FA5;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-add-dep:hover { background: #e6f1fb; }
+
+  .btn-remove {
+    background: none; border: 1px solid #f09595;
+    color: #a32d2d; border-radius: 6px;
+    padding: 3px 10px; font-size: 12px; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-remove:hover { background: #fcebeb; }
+
+  /* ── Declaration ── */
+  .declaration-box {
+    background: #f7f9fc; border: 1px solid #dce3ed;
+    border-radius: 10px; padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .declaration-box h3 {
+    font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px;
+  }
+  .declaration-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .declaration-list li {
+    font-size: 12.5px; color: #4a5568; line-height: 1.65;
+    padding-left: 22px; position: relative;
+  }
+  .declaration-list li::before {
+    content: attr(data-n); position: absolute; left: 0;
+    color: #185FA5; font-weight: 700;
+  }
+  .consent-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid #dce3ed;
+  }
+  .consent-row input[type="checkbox"] {
+    width: 16px; height: 16px; min-width: 16px;
+    margin-top: 2px; accent-color: #185FA5; cursor: pointer;
+  }
+  .consent-row label {
+    font-size: 12.5px; color: #1a1a2e; line-height: 1.55; cursor: pointer; font-weight: 500;
+  }
+
+  /* ── Submit ── */
+  .btn-submit {
+    width: 100%; padding: 13px;
+    background: #0C447C; color: #fff;
+    border: none; border-radius: 9px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.18s, transform 0.1s;
+  }
+  .btn-submit:hover  { background: #185FA5; }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { background: #8aabb5; cursor: not-allowed; }
+
+  /* ── Toast ── */
+  .toast {
+    display: none; margin-top: 14px;
+    padding: 12px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+  }
+  .toast.success { background: #eaf3de; color: #27500a; border: 1px solid #c0dd97; display: flex; align-items: center; gap: 8px; }
+  .toast.error   { background: #fcebeb; color: #791f1f; border: 1px solid #f7c1c1; display: flex; align-items: center; gap: 8px; }
+
+  /* ── Spinner ── */
+  .spinner {
+    width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.7s linear infinite; display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="form-header">
+    <div class="logo-row">
+      <div class="shield">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Mediclaim Coverage Survey Form</h1>
+        <p>Padam's &nbsp;|&nbsp; HR &amp; Benefits Department</p>
+      </div>
+    </div>
+    <p>Fill in accurate details as per official records. Fields marked <span style="color:#fac775">*</span> are mandatory.</p>
+  </div>
+
+  <div class="form-body">
+    <form id="medForm" novalidate>
+
+      <!-- ── Employee Info ── -->
+      <div class="section">
+        <div class="section-title">&#9679; Employee Information</div>
+        <div style="margin-bottom:14px">
+          <div class="field">
+            <label for="fullName">Full Name (as per Aadhaar) <span class="req">*</span></label>
+            <input type="text" id="fullName" placeholder="Enter name exactly as on Aadhaar card">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-bottom:14px">
+          <div class="field">
+            <label for="empCode">Employee Code <span class="req">*</span></label>
+            <input type="text" id="empCode" placeholder="e.g. EMP00123">
+          </div>
+          <div class="field">
+            <label for="dob">Date of Birth <span class="req">*</span></label>
+            <input type="date" id="dob">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="gender">Gender <span class="req">*</span></label>
+            <select id="gender">
+              <option value="" disabled selected>Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Dependents ── -->
+      <div class="section">
+        <div class="section-title">&#9679; Dependents</div>
+        <p style="font-size:12.5px;color:#5a6a7e;margin-bottom:14px">
+          Select relationship first — name, DOB and gender fields will appear. Add as many dependents as needed.
+        </p>
+        <div id="depContainer"></div>
+        <button type="button" class="btn-add-dep" id="btnAddDep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Dependent
+        </button>
+      </div>
+
+      <!-- ── Declaration ── -->
+      <div class="declaration-box">
+        <h3>&#128196; Employee Declaration &amp; Consent</h3>
+        <p style="font-size:12.5px;color:#5a6a7e;margin-bottom:10px">
+          By submitting this Survey / Enrollment Form, I confirm the following:
+        </p>
+        <ol class="declaration-list">
+          <li data-n="1.">I understand that 50% of the Mediclaim insurance premium for myself, my spouse, and dependent children will be recovered from my salary through payroll deductions as per the Company's policy.</li>
+          <li data-n="2.">I understand that 100% of the Mediclaim insurance premium for my parents and / or parents-in-law will be recovered from my salary through payroll deductions as per the Company's policy.</li>
+          <li data-n="3.">I confirm that the information provided by me in this Form is true and correct to the best of my knowledge. I understand that providing incorrect or incomplete information may affect my insurance coverage.</li>
+          <li data-n="4.">I understand that Mediclaim coverage is linked to my employment with Padam's and will cease upon separation from the Company, subject to the terms of the policy.</li>
+        </ol>
+        <div class="consent-row">
+          <input type="checkbox" id="consent">
+          <label for="consent">
+            I have read and understood the above and authorise the Company to recover the applicable premium contribution from my salary through payroll deductions.
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="btnSubmit">
+        <span id="btnText">Submit Enrollment Form</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+
+      <div class="toast" id="toast"></div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  STEP 1: Yahan apna Google Apps Script Web App URL paste karo
+//  Deploy karne ke baad milta hai:
+//  Extensions → Apps Script → Deploy → New deployment → Web App URL
+// ════════════════════════════════════════════════════════════
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNEMQXI33ZkHkjxn74cV1bkq1UNleRPFr5I_-uRgJfrc7mmrBH9N3KdEVeLag6ssTAXA/exec";
+
+// ── Relationship options ─────────────────────────────────────
+var RELATIONS = [
+  "Husband","Wife","Son","Daughter",
+  "Father","Mother","Father-in-law","Mother-in-law"
+];
+
+var depCount = 0;
+
+// ── Add Dependent ────────────────────────────────────────────
+document.getElementById("btnAddDep").addEventListener("click", function() {
+  depCount++;
+  var id = depCount;
+  var container = document.getElementById("depContainer");
+
+  var opts = RELATIONS.map(function(r) {
+    return '<option value="' + r + '">' + r + '</option>';
+  }).join("");
+
+  var div = document.createElement("div");
+  div.className = "dep-block";
+  div.id = "dep-" + id;
+  div.innerHTML =
+    '<div class="dep-block-header">' +
+      '<span class="dep-number">Dependent ' + id + '</span>' +
+      '<button type="button" class="btn-remove" onclick="removeDep(' + id + ')">&#10005; Remove</button>' +
+    '</div>' +
+    '<div class="field">' +
+      '<label>Relationship <span class="req">*</span></label>' +
+      '<select id="rel-' + id + '" onchange="showDepDetail(' + id + ')">' +
+        '<option value="" disabled selected>Select relationship</option>' +
+        opts +
+      '</select>' +
+    '</div>' +
+    '<div class="dep-detail" id="depDetail-' + id + '" style="display:none">' +
+      '<div class="grid-3" style="margin-top:12px">' +
+        '<div class="field">' +
+          '<label>Full Name <span class="req">*</span></label>' +
+          '<input type="text" id="depName-' + id + '" placeholder="Full name">' +
+        '</div>' +
+        '<div class="field">' +
+          '<label>Date of Birth <span class="req">*</span></label>' +
+          '<input type="date" id="depDob-' + id + '">' +
+        '</div>' +
+        '<div class="field">' +
+          '<label>Gender <span class="req">*</span></label>' +
+          '<select id="depGender-' + id + '">' +
+            '<option value="" disabled selected>Select</option>' +
+            '<option>Male</option><option>Female</option><option>Other</option>' +
+          '</select>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  container.appendChild(div);
+});
+
+function showDepDetail(id) {
+  var rel    = document.getElementById("rel-" + id).value;
+  var detail = document.getElementById("depDetail-" + id);
+  detail.style.display = rel ? "block" : "none";
+}
+
+function removeDep(id) {
+  var el = document.getElementById("dep-" + id);
+  if (el) el.remove();
+}
+
+// ── Collect all dependents from DOM ─────────────────────────
+function collectDependents() {
+  var deps = [];
+  for (var i = 1; i <= depCount; i++) {
+    var block = document.getElementById("dep-" + i);
+    if (!block) continue;
+    var rel = document.getElementById("rel-" + i);
+    if (!rel || !rel.value) continue;
+    deps.push({
+      relation : rel.value,
+      name     : (document.getElementById("depName-"   + i) || {}).value || "",
+      dob      : (document.getElementById("depDob-"    + i) || {}).value || "",
+      gender   : (document.getElementById("depGender-" + i) || {}).value || ""
+    });
+  }
+  return deps;
+}
+
+// ── Validate ─────────────────────────────────────────────────
+function validate() {
+  var ok = true;
+  ["fullName","empCode","dob","gender"].forEach(function(fid) {
+    var el = document.getElementById(fid);
+    el.classList.remove("error");
+    if (!el.value.trim()) { el.classList.add("error"); ok = false; }
+  });
+  if (!document.getElementById("consent").checked) {
+    showToast("error", "Please read and accept the declaration before submitting.");
+    ok = false;
+  }
+  if (!ok && document.getElementById("fullName").classList.contains("error")) {
+    showToast("error", "Please fill all required employee fields.");
+  }
+  return ok;
+}
+
+// ── Submit ───────────────────────────────────────────────────
+document.getElementById("medForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  if (!validate()) return;
+
+  if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+    showToast("error", "SCRIPT_URL set nahi ki! form.html mein apna Apps Script URL paste karo.");
+    return;
+  }
+
+  setLoading(true);
+
+  var payload = {
+    fullName        : document.getElementById("fullName").value.trim(),
+    empCode         : document.getElementById("empCode").value.trim(),
+    dob             : document.getElementById("dob").value,
+    gender          : document.getElementById("gender").value,
+    consentAccepted : document.getElementById("consent").checked,
+    dependents      : collectDependents()
+  };
+
+  fetch(SCRIPT_URL, {
+    method  : "POST",
+    headers : { "Content-Type": "text/plain" },
+    body    : JSON.stringify(payload)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(result) {
+    setLoading(false);
+    if (result.status === "success") {
+      showToast("success", "&#10003; Form successfully submitted! Your data has been saved.");
+      document.getElementById("medForm").reset();
+      document.getElementById("depContainer").innerHTML = "";
+      depCount = 0;
+    } else {
+      showToast("error", "Error: " + (result.message || "Unknown error"));
+    }
+  })
+  .catch(function(err) {
+    setLoading(false);
+    showToast("error", "Network error: " + err.message);
+  });
+});
+
+// ── Helpers ──────────────────────────────────────────────────
+function setLoading(on) {
+  document.getElementById("btnSubmit").disabled = on;
+  document.getElementById("spinner").style.display  = on ? "block" : "none";
+  document.getElementById("btnText").textContent    = on ? "Submitting…" : "Submit Enrollment Form";
+}
+
+function showToast(type, msg) {
+  var t = document.getElementById("toast");
+  t.className = "toast " + type;
+  t.innerHTML = msg;
+  t.style.display = "flex";
+  if (type === "success") {
+    setTimeout(function() { t.style.display = "none"; }, 6000);
+  }
+}
+</script>
+</body>
+</html>
