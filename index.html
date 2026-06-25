@@ -24,16 +24,15 @@
     padding: 28px 32px 24px;
     color: #fff;
   }
-  .form-header .logo-row {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
-  }
-  .form-header .shield {
-    width: 40px; height: 40px; background: rgba(255,255,255,0.15);
+  .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .shield {
+    width: 42px; height: 42px; background: rgba(255,255,255,0.15);
     border-radius: 10px; display: flex; align-items: center; justify-content: center;
   }
-  .form-header .shield svg { width: 22px; height: 22px; }
+  .shield svg { width: 22px; height: 22px; }
   .form-header h1 { font-size: 20px; font-weight: 600; line-height: 1.3; }
-  .form-header p  { font-size: 13px; opacity: 0.78; margin-top: 4px; }
+  .form-header .dept { font-size: 13px; opacity: 0.78; margin-top: 3px; }
+  .form-header .subtitle { font-size: 13px; opacity: 0.72; margin-top: 8px; }
 
   /* ── Body ── */
   .form-body {
@@ -45,16 +44,14 @@
   }
 
   /* ── Section ── */
-  .section { margin-bottom: 28px; }
+  .section { margin-bottom: 26px; }
   .section-title {
     font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
     text-transform: uppercase; color: #185FA5;
     display: flex; align-items: center; gap: 8px;
     margin-bottom: 16px;
   }
-  .section-title::after {
-    content: ''; flex: 1; height: 1px; background: #e2e8f2;
-  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: #e2e8f2; }
 
   /* ── Grid ── */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -73,16 +70,19 @@
     border: 1px solid #d0d8e4; border-radius: 8px;
     font-size: 14px; font-family: inherit;
     background: #fff; color: #1a1a2e;
-    outline: none; transition: border-color 0.18s, box-shadow 0.18s;
-    height: 38px;
+    outline: none; height: 38px;
+    transition: border-color 0.18s, box-shadow 0.18s;
   }
   .field input:focus, .field select:focus {
     border-color: #185FA5;
     box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
   }
-  .field input.error, .field select.error { border-color: #e24b4a; }
+  .field input.error, .field select.error {
+    border-color: #e24b4a;
+    box-shadow: 0 0 0 3px rgba(226,75,74,0.1);
+  }
 
-  /* ── Dependent block ── */
+  /* ── Dependent ── */
   .dep-block {
     background: #f7f9fc;
     border: 1px solid #dce3ed;
@@ -90,15 +90,24 @@
     padding: 16px;
     margin-bottom: 12px;
   }
-  .dep-block-header {
+  .dep-header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 14px;
   }
-  .dep-number {
+  .dep-badge {
     font-size: 12px; font-weight: 700; color: #185FA5;
     background: #e6f1fb; padding: 3px 10px; border-radius: 20px;
   }
   .dep-detail { margin-top: 12px; }
+
+  /* ── Counter ── */
+  .dep-counter {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; padding: 8px 12px;
+    background: #e6f1fb; border-radius: 8px;
+    font-size: 12.5px; color: #185FA5; font-weight: 500;
+  }
+  .dep-counter span { font-weight: 700; }
 
   /* ── Buttons ── */
   .btn-add-dep {
@@ -110,7 +119,10 @@
     transition: background 0.15s;
   }
   .btn-add-dep:hover { background: #e6f1fb; }
-
+  .btn-add-dep:disabled {
+    border-color: #b0b8c4; color: #8a9ab0; cursor: not-allowed;
+    background: #f5f7fa;
+  }
   .btn-remove {
     background: none; border: 1px solid #f09595;
     color: #a32d2d; border-radius: 6px;
@@ -119,15 +131,20 @@
   }
   .btn-remove:hover { background: #fcebeb; }
 
+  /* ── Max notice ── */
+  .max-notice {
+    display: none; text-align: center; padding: 10px;
+    font-size: 12.5px; color: #854F0B; font-weight: 500;
+    background: #FAEEDA; border-radius: 8px; margin-top: 4px;
+  }
+  .max-notice.show { display: block; }
+
   /* ── Declaration ── */
   .declaration-box {
     background: #f7f9fc; border: 1px solid #dce3ed;
-    border-radius: 10px; padding: 18px 20px;
-    margin-bottom: 20px;
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 20px;
   }
-  .declaration-box h3 {
-    font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px;
-  }
+  .declaration-box h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
   .declaration-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .declaration-list li {
     font-size: 12.5px; color: #4a5568; line-height: 1.65;
@@ -143,9 +160,10 @@
     border-top: 1px solid #dce3ed;
   }
   .consent-row input[type="checkbox"] {
-    width: 16px; height: 16px; min-width: 16px;
+    width: 17px; height: 17px; min-width: 17px;
     margin-top: 2px; accent-color: #185FA5; cursor: pointer;
   }
+  .consent-row input[type="checkbox"].error { outline: 2px solid #e24b4a; border-radius: 3px; }
   .consent-row label {
     font-size: 12.5px; color: #1a1a2e; line-height: 1.55; cursor: pointer; font-weight: 500;
   }
@@ -157,69 +175,80 @@
     border: none; border-radius: 9px;
     font-size: 15px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: background 0.18s, transform 0.1s;
+    transition: background 0.18s;
   }
   .btn-submit:hover  { background: #185FA5; }
-  .btn-submit:active { transform: scale(0.99); }
   .btn-submit:disabled { background: #8aabb5; cursor: not-allowed; }
-
-  /* ── Toast ── */
-  .toast {
-    display: none; margin-top: 14px;
-    padding: 12px 16px; border-radius: 8px;
-    font-size: 13px; font-weight: 600;
-  }
-  .toast.success { background: #eaf3de; color: #27500a; border: 1px solid #c0dd97; display: flex; align-items: center; gap: 8px; }
-  .toast.error   { background: #fcebeb; color: #791f1f; border: 1px solid #f7c1c1; display: flex; align-items: center; gap: 8px; }
-
-  /* ── Spinner ── */
   .spinner {
     width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4);
     border-top-color: #fff; border-radius: 50%;
     animation: spin 0.7s linear infinite; display: none;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  .toast {
+    display: none; margin-top: 14px; padding: 12px 16px;
+    border-radius: 8px; font-size: 13px; font-weight: 600;
+  }
+  .toast.success {
+    background: #eaf3de; color: #27500a;
+    border: 1px solid #c0dd97; display: flex; align-items: center; gap: 8px;
+  }
+  .toast.error {
+    background: #fcebeb; color: #791f1f;
+    border: 1px solid #f7c1c1; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── Error helper text ── */
+  .err-msg { font-size: 11.5px; color: #a32d2d; margin-top: 4px; display: none; }
+  .err-msg.show { display: block; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
 
+  <!-- Header -->
   <div class="form-header">
     <div class="logo-row">
       <div class="shield">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/>
           <polyline points="9 12 11 14 15 10"/>
         </svg>
       </div>
       <div>
         <h1>Mediclaim Coverage Survey Form</h1>
-        <p>Padam's &nbsp;|&nbsp; Human Resources </p>
+        <p class="dept">Padam's &nbsp;|&nbsp; Human Resources</p>
       </div>
     </div>
-    <p>Fill in accurate details as per official records. Fields marked <span style="color:#fac775">*</span> are mandatory.</p>
+    <p class="subtitle">Fill in accurate details as per official records. Fields marked <span style="color:#fac775">*</span> are mandatory.</p>
   </div>
 
   <div class="form-body">
     <form id="medForm" novalidate>
 
-      <!-- ── Employee Info ── -->
+      <!-- Employee Info -->
       <div class="section">
         <div class="section-title">&#9679; Employee Information</div>
         <div style="margin-bottom:14px">
           <div class="field">
             <label for="fullName">Full Name (as per Aadhaar) <span class="req">*</span></label>
             <input type="text" id="fullName" placeholder="Enter name exactly as on Aadhaar card">
+            <span class="err-msg" id="err-fullName">Please enter full name as per Aadhaar.</span>
           </div>
         </div>
         <div class="grid-2" style="margin-bottom:14px">
           <div class="field">
             <label for="empCode">Employee Code <span class="req">*</span></label>
             <input type="text" id="empCode" placeholder="e.g. EMP00123">
+            <span class="err-msg" id="err-empCode">Please enter employee code.</span>
           </div>
           <div class="field">
             <label for="dob">Date of Birth <span class="req">*</span></label>
-            <input type="date" id="dob" max="9999-12-31">
+            <input type="date" id="dob">
+            <span class="err-msg" id="err-dob">Please select date of birth.</span>
           </div>
         </div>
         <div class="grid-2">
@@ -229,26 +258,41 @@
               <option value="" disabled selected>Select gender</option>
               <option>Male</option>
               <option>Female</option>
-              <option>Not to say</option>
+              <option>Other</option>
+              <option>Prefer not to say</option>
             </select>
+            <span class="err-msg" id="err-gender">Please select gender.</span>
           </div>
         </div>
       </div>
 
-      <!-- ── Dependents ── -->
+      <!-- Dependents -->
       <div class="section">
         <div class="section-title">&#9679; Dependents</div>
-        <p style="font-size:12.5px;color:#5a6a7e;margin-bottom:14px">
-          Select relationship first — name, DOB and gender fields will appear. Add as many dependents as needed.
+        <p style="font-size:12.5px;color:#5a6a7e;margin-bottom:12px">
+          Select relationship first — name, DOB and gender fields will appear. Maximum <strong>7 dependents</strong> allowed.
         </p>
+
+        <!-- Counter -->
+        <div class="dep-counter" id="depCounter" style="display:none">
+          Dependents added: <span id="depCountNum">0</span> / 7
+        </div>
+
         <div id="depContainer"></div>
+
         <button type="button" class="btn-add-dep" id="btnAddDep">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
           Add Dependent
         </button>
+        <div class="max-notice" id="maxNotice">
+          &#9888; Maximum 7 dependents added. Remove one to add another.
+        </div>
       </div>
 
-      <!-- ── Declaration ── -->
+      <!-- Declaration -->
       <div class="declaration-box">
         <h3>&#128196; Employee Declaration &amp; Consent</h3>
         <p style="font-size:12.5px;color:#5a6a7e;margin-bottom:10px">
@@ -261,11 +305,15 @@
           <li data-n="4.">I understand that Mediclaim coverage is linked to my employment with Padam's and will cease upon separation from the Company, subject to the terms of the policy.</li>
         </ol>
         <div class="consent-row">
-          <input type="checkbox" id="consent" required>
+          <input type="checkbox" id="consent">
           <label for="consent">
-            I have read and understood the above and authorise the Company to recover the applicable premium contribution from my salary through payroll deductions.
+            I have read and understood the above and authorise the Company to recover the applicable premium
+            contribution from my salary through payroll deductions.
           </label>
         </div>
+        <span class="err-msg" id="err-consent" style="margin-top:6px;margin-left:27px">
+          Please accept the declaration before submitting.
+        </span>
       </div>
 
       <button type="submit" class="btn-submit" id="btnSubmit">
@@ -280,32 +328,32 @@
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-//  STEP 1: Yahan apna Google Apps Script Web App URL paste karo
-//  Deploy karne ke baad milta hai:
-//  Extensions → Apps Script → Deploy → New deployment → Web App URL
-// ════════════════════════════════════════════════════════════
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNEMQXI33ZkHkjxn74cV1bkq1UNleRPFr5I_-uRgJfrc7mmrBH9N3KdEVeLag6ssTAXA/exec";
+// ══════════════════════════════════════════════════════════════
+//  STEP: Apna Google Apps Script Web App URL yahan paste karo
+// ══════════════════════════════════════════════════════════════
+var SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 
-// ── Relationship options ─────────────────────────────────────
+var MAX_DEPS  = 7;
+var depCount  = 0;   // total ever created (for unique IDs)
+var depActive = 0;   // currently visible
+
 var RELATIONS = [
   "Husband","Wife","Son","Daughter",
   "Father","Mother","Father-in-law","Mother-in-law"
 ];
 
-var depCount = 0;
+// ── Add Dependent ─────────────────────────────────────────────
+document.getElementById("btnAddDep").addEventListener("click", addDependent);
 
-// ── Add Dependent ────────────────────────────────────────────
-document.getElementById("btnAddDep").addEventListener("click", function() {
-  var activeDeps = document.querySelectorAll(".dep-block").length;
-  if (activeDeps >= 7) {
-    showToast("error", "Maximum 7 dependents allowed.");
-    return;
-  }
+function addDependent() {
+  if (depActive >= MAX_DEPS) return;
+
   depCount++;
-  var id = depCount;
-  var container = document.getElementById("depContainer");
+  depActive++;
+  updateCounter();
 
+  var id  = depCount;
+  var num = depActive;
   var opts = RELATIONS.map(function(r) {
     return '<option value="' + r + '">' + r + '</option>';
   }).join("");
@@ -314,18 +362,17 @@ document.getElementById("btnAddDep").addEventListener("click", function() {
   div.className = "dep-block";
   div.id = "dep-" + id;
   div.innerHTML =
-    '<div class="dep-block-header">' +
-      '<span class="dep-number">Dependent ' + id + '</span>' +
+    '<div class="dep-header">' +
+      '<span class="dep-badge">Dependent ' + num + '</span>' +
       '<button type="button" class="btn-remove" onclick="removeDep(' + id + ')">&#10005; Remove</button>' +
     '</div>' +
     '<div class="field">' +
       '<label>Relationship <span class="req">*</span></label>' +
       '<select id="rel-' + id + '" onchange="showDepDetail(' + id + ')">' +
-        '<option value="" disabled selected>Select relationship</option>' +
-        opts +
+        '<option value="" disabled selected>Select relationship</option>' + opts +
       '</select>' +
     '</div>' +
-    '<div class="dep-detail" id="depDetail-' + id + '" style="display:none">' +
+    '<div id="depDetail-' + id + '" style="display:none">' +
       '<div class="grid-3" style="margin-top:12px">' +
         '<div class="field">' +
           '<label>Full Name <span class="req">*</span></label>' +
@@ -333,20 +380,21 @@ document.getElementById("btnAddDep").addEventListener("click", function() {
         '</div>' +
         '<div class="field">' +
           '<label>Date of Birth <span class="req">*</span></label>' +
-          '<input type="date" id="depDob-' + id + '" max="9999-12-31">+
+          '<input type="date" id="depDob-' + id + '">' +
         '</div>' +
         '<div class="field">' +
           '<label>Gender <span class="req">*</span></label>' +
           '<select id="depGender-' + id + '">' +
             '<option value="" disabled selected>Select</option>' +
-            '<option>Male</option><option>Female</option><option>Not to say</option>' +
+            '<option>Male</option><option>Female</option><option>Other</option>' +
           '</select>' +
         '</div>' +
       '</div>' +
     '</div>';
 
-  container.appendChild(div);
-});
+  document.getElementById("depContainer").appendChild(div);
+  updateAddBtn();
+}
 
 function showDepDetail(id) {
   var rel    = document.getElementById("rel-" + id).value;
@@ -356,46 +404,96 @@ function showDepDetail(id) {
 
 function removeDep(id) {
   var el = document.getElementById("dep-" + id);
-  if (el) el.remove();
+  if (!el) return;
+  el.remove();
+  depActive--;
+  updateCounter();
+  updateAddBtn();
+  renumberDeps();
 }
 
-// ── Collect all dependents from DOM ─────────────────────────
+function renumberDeps() {
+  var blocks = document.querySelectorAll("#depContainer .dep-block");
+  blocks.forEach(function(block, i) {
+    var badge = block.querySelector(".dep-badge");
+    if (badge) badge.textContent = "Dependent " + (i + 1);
+  });
+}
+
+function updateCounter() {
+  var counter = document.getElementById("depCounter");
+  document.getElementById("depCountNum").textContent = depActive;
+  counter.style.display = depActive > 0 ? "flex" : "none";
+}
+
+function updateAddBtn() {
+  var btn     = document.getElementById("btnAddDep");
+  var notice  = document.getElementById("maxNotice");
+  var reached = depActive >= MAX_DEPS;
+  btn.disabled = reached;
+  notice.classList.toggle("show", reached);
+}
+
+// ── Collect dependents ────────────────────────────────────────
 function collectDependents() {
-  var deps = [];
-  for (var i = 1; i <= depCount; i++) {
-    var block = document.getElementById("dep-" + i);
-    if (!block) continue;
-    var rel = document.getElementById("rel-" + i);
-    if (!rel || !rel.value) continue;
+  var deps   = [];
+  var blocks = document.querySelectorAll("#depContainer .dep-block");
+  blocks.forEach(function(block) {
+    var blockId = block.id.replace("dep-", "");
+    var relEl   = document.getElementById("rel-"       + blockId);
+    var nameEl  = document.getElementById("depName-"   + blockId);
+    var dobEl   = document.getElementById("depDob-"    + blockId);
+    var genEl   = document.getElementById("depGender-" + blockId);
+    if (!relEl || !relEl.value) return;
     deps.push({
-      relation : rel.value,
-      name     : (document.getElementById("depName-"   + i) || {}).value || "",
-      dob      : (document.getElementById("depDob-"    + i) || {}).value || "",
-      gender   : (document.getElementById("depGender-" + i) || {}).value || ""
+      relation : relEl.value,
+      name     : nameEl ? nameEl.value : "",
+      dob      : dobEl  ? dobEl.value  : "",
+      gender   : genEl  ? genEl.value  : ""
     });
-  }
+  });
   return deps;
 }
 
-// ── Validate ─────────────────────────────────────────────────
+// ── Validation ────────────────────────────────────────────────
+function clearErrors() {
+  document.querySelectorAll(".error").forEach(function(el) { el.classList.remove("error"); });
+  document.querySelectorAll(".err-msg").forEach(function(el) { el.classList.remove("show"); });
+}
+
+function setError(fieldId, errId) {
+  var f = document.getElementById(fieldId);
+  var e = document.getElementById(errId);
+  if (f) f.classList.add("error");
+  if (e) e.classList.add("show");
+}
+
 function validate() {
+  clearErrors();
   var ok = true;
-  ["fullName","empCode","dob","gender"].forEach(function(fid) {
-    var el = document.getElementById(fid);
-    el.classList.remove("error");
-    if (!el.value.trim()) { el.classList.add("error"); ok = false; }
-  });
+
+  // Employee fields
+  if (!document.getElementById("fullName").value.trim()) { setError("fullName","err-fullName"); ok = false; }
+  if (!document.getElementById("empCode").value.trim())  { setError("empCode","err-empCode");   ok = false; }
+  if (!document.getElementById("dob").value)             { setError("dob","err-dob");           ok = false; }
+  if (!document.getElementById("gender").value)          { setError("gender","err-gender");     ok = false; }
+
+  // Declaration checkbox
   if (!document.getElementById("consent").checked) {
-    showToast("error", "Please read and accept the declaration before submitting.");
+    document.getElementById("consent").classList.add("error");
+    document.getElementById("err-consent").classList.add("show");
     ok = false;
   }
-  if (!ok && document.getElementById("fullName").classList.contains("error")) {
-    showToast("error", "Please fill all required employee fields.");
+
+  if (!ok) {
+    // Scroll to first error
+    var first = document.querySelector(".error, .err-msg.show");
+    if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
   }
   return ok;
 }
 
-// ── Submit ───────────────────────────────────────────────────
+// ── Submit ────────────────────────────────────────────────────
 document.getElementById("medForm").addEventListener("submit", function(e) {
   e.preventDefault();
   if (!validate()) return;
@@ -412,7 +510,7 @@ document.getElementById("medForm").addEventListener("submit", function(e) {
     empCode         : document.getElementById("empCode").value.trim(),
     dob             : document.getElementById("dob").value,
     gender          : document.getElementById("gender").value,
-    consentAccepted : document.getElementById("consent").checked,
+    consentAccepted : true,
     dependents      : collectDependents()
   };
 
@@ -425,12 +523,16 @@ document.getElementById("medForm").addEventListener("submit", function(e) {
   .then(function(result) {
     setLoading(false);
     if (result.status === "success") {
-      showToast("success", "&#10003; Form successfully submitted! Your data has been saved.");
+      showToast("success",
+        "&#10003; Form successfully submitted! Your Mediclaim enrollment has been recorded.");
       document.getElementById("medForm").reset();
       document.getElementById("depContainer").innerHTML = "";
-      depCount = 0;
+      depCount  = 0;
+      depActive = 0;
+      updateCounter();
+      updateAddBtn();
     } else {
-      showToast("error", "Error: " + (result.message || "Unknown error"));
+      showToast("error", "Submission failed: " + (result.message || "Unknown error."));
     }
   })
   .catch(function(err) {
@@ -439,11 +541,11 @@ document.getElementById("medForm").addEventListener("submit", function(e) {
   });
 });
 
-// ── Helpers ──────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────
 function setLoading(on) {
-  document.getElementById("btnSubmit").disabled = on;
-  document.getElementById("spinner").style.display  = on ? "block" : "none";
-  document.getElementById("btnText").textContent    = on ? "Submitting…" : "Submit Enrollment Form";
+  document.getElementById("btnSubmit").disabled      = on;
+  document.getElementById("spinner").style.display   = on ? "block" : "none";
+  document.getElementById("btnText").textContent     = on ? "Submitting…" : "Submit Enrollment Form";
 }
 
 function showToast(type, msg) {
@@ -451,8 +553,9 @@ function showToast(type, msg) {
   t.className = "toast " + type;
   t.innerHTML = msg;
   t.style.display = "flex";
+  t.scrollIntoView({ behavior: "smooth", block: "nearest" });
   if (type === "success") {
-    setTimeout(function() { t.style.display = "none"; }, 6000);
+    setTimeout(function() { t.style.display = "none"; }, 7000);
   }
 }
 </script>
